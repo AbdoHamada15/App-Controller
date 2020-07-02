@@ -28,13 +28,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.UUID;
 
-public class Direction extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener{
+public class Direction extends AppCompatActivity {
     //Navigation
-    DrawerLayout drawerLayout;
-    NavigationView navigationView;
+    private DrawerLayout drawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    private NavigationView navigationView;
     //Direction
     Button forward_btn, left_btn, right_btn, reverse_btn, stop;
-    ImageView menuIcon;
+    //ImageView menuIcon;
     String address = null;
     private ProgressDialog progress;
     BluetoothAdapter myBluetooth = null;
@@ -106,201 +107,118 @@ public class Direction extends AppCompatActivity  implements NavigationView.OnNa
         stop=findViewById(R.id.stop);
         right_btn=findViewById(R.id.right_btn);
         left_btn=findViewById(R.id.left_btn);
-        menuIcon= findViewById(R.id.menu);
-        //textView2 =findViewById(R.id.textView2);
-        //try { t1.setText("\nBT Address: "+address); }
-        //catch(Exception e){}
-        BitmapFactory.Options options= new BitmapFactory.Options();
-        options.inSampleSize= 8;
-
         //Nav
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.navigation_view);
         //
-
-
         navigationDrawer();
-        //OnTouchListener code for the forward button (button long press)
-        forward_btn.setOnTouchListener(new View.OnTouchListener() {
+        forward_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) //MotionEvent.ACTION_DOWN is when you hold a button down
-                {
-                    command = "1";
-                    try {
-                        outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
-                        msg("Front");
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+            public void onClick(View view) {
+                command = "1";
+                try {
+                    outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
+                    msg("Front");
                 }
-                else if(event.getAction() == MotionEvent.ACTION_UP) //MotionEvent.ACTION_UP is when you release a button
-                {
-                    command = "10";
-                    try {
-                        outputStream.write(command.getBytes());
-                    }
-                    catch(IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    msg("Error");
                 }
-                return false;
-            }
-
-        });
-        //OnTouchListener code for the reverse button (button long press)
-        reverse_btn.setOnTouchListener(new View.OnTouchListener(){
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    command = "2";
-                    try {
-                        outputStream.write(command.getBytes());
-                        msg("Reverse");
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
-                }
-                else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    command = "10";
-                    try {
-                        outputStream.write(command.getBytes());
-                    }
-                    catch(IOException e) {
-                        msg("Error");
-                    }
-                }
-                return false;
             }
         });
-        //OnTouchListener code for the forward left button (button long press)
-        left_btn.setOnTouchListener(new View.OnTouchListener(){
+        reverse_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    command = "3";
-                    try {
-                        outputStream.write(command.getBytes());
-                        msg(" Left");
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+            public void onClick(View view) {
+                command = "2";
+                try {
+                    outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
+                    msg("Reverse");
                 }
-                else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    command = "10";
-                    try {
-                        outputStream.write(command.getBytes());
-                    }
-                    catch(IOException e) {
-                        msg("Error");
-                    }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    msg("Error");
                 }
-                return false;
             }
         });
-        //OnTouchListener code for the forward right button (button long press)
-        right_btn.setOnTouchListener(new View.OnTouchListener(){
+        left_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    command = "4";
-                    try {
-                        outputStream.write(command.getBytes());
-                        msg(" Right");
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+            public void onClick(View view) {
+                command = "3";
+                try {
+                    outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
+                    msg("Left");
                 }
-                else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    command = "10";
-                    try {
-                        outputStream.write(command.getBytes());
-                    }
-                    catch(IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    msg("Error");
                 }
-                return false;
             }
         });
-        //OnTouchListener code for the sTop button (button long press)
-        stop.setOnTouchListener(new View.OnTouchListener(){
+        right_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    command = "5";
-                    try {
-                        outputStream.write(command.getBytes());
-                        msg("Stop");
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
-                        msg("Error");
-                    }
+            public void onClick(View view) {
+                command = "4";
+                try {
+                    outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
+                    msg("Right");
                 }
-                else if(event.getAction() == MotionEvent.ACTION_UP) {
-                    command = "10";
-                    try {
-                        outputStream.write(command.getBytes());
-                    }
-                    catch(IOException e) {
-                        msg("Error");
-                    }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    msg("Error");
                 }
-                return false;
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                command = "5";
+                try {
+                    outputStream.write(command.getBytes()); //transmits the value of command to the bluetooth module
+                    msg("Stop");
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                    msg("Error");
+                }
             }
         });
     }
     private void navigationDrawer() {
         navigationView.bringToFront();
-        navigationView.setNavigationItemSelectedListener(this);
+        mToggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
+        drawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         navigationView.setCheckedItem(R.id.nav_direction);
-        menuIcon.setOnClickListener(new View.OnClickListener() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                if(drawerLayout.isDrawerVisible(GravityCompat.START)){
-                    drawerLayout.closeDrawer(GravityCompat.START); }
-            else drawerLayout.openDrawer(GravityCompat.START);
+            public boolean onNavigationItemSelected(final MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_direction:
+                        msg("Direction");
+                        break;
+                    case R.id.nav_voice:
+                        Intent intent= new Intent(Direction.this,Voice.class);
+                        startActivity(intent);
+                        msg("Voice");
+                        break;
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
             }
         });
-       // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.nav_drawer_open,R.string.nav_drawer_close);
-       // drawerLayout.addDrawerListener(toggle);
-       // toggle.syncState();
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(mToggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
     @Override
     public void onBackPressed() {
         if(drawerLayout.isDrawerVisible(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START); }
         else  super.onBackPressed();
-    }
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()){
-            case R.id.nav_direction:
-                msg("Direction");
-                break;
-            case R.id.nav_voice:
-                Intent intent= new Intent(Direction.this,Voice.class);
-                startActivity(intent);
-                msg("Voice");
-                break;
-        }
-        drawerLayout.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

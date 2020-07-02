@@ -12,5 +12,7 @@
     <string name="todo__">TODO</string>
     <string name="nav_drawer_open">Open Navigation drawer</string>
     <string name="nav_drawer_close">Close Navigation drawer</string>
+    <string name="open">Open Drawer</string>
+    <string name="close">Close Drawer</string>
 
 </resources>

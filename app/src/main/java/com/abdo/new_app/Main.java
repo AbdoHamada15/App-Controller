@@ -5,12 +5,9 @@ import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -60,13 +57,27 @@ public class Main extends AppCompatActivity {
         searchButton = findViewById(R.id.searchButton);
         listView =findViewById(R.id.listView);
         statustextView = findViewById(R.id.statustextView);
+
+
+
+
+        // arrayAdapter = new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_list_item_1,stringArrayList);
         //Enable Bluetooth
         Intent discoverableIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE);
         discoverableIntent.putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 30);
         startActivity(discoverableIntent);
 
-        myBluetooth = BluetoothAdapter.getDefaultAdapter();
 
+        myBluetooth = BluetoothAdapter.getDefaultAdapter();
+        //if(myBluetooth == null) {
+        // Toast.makeText(getApplicationContext(), "Bluetooth Device Not Available", Toast.LENGTH_LONG).show();
+        // finish(); }
+        // else {
+        //  if (myBluetooth.isEnabled()) { }
+        // else {
+        // Intent turnBTon = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+        //  startActivityForResult(turnBTon,1); }
+        //}
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,18 +124,4 @@ public class Main extends AppCompatActivity {
             finish();
         }
     };
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.listView)
-            return true;
-        return super.onOptionsItemSelected(item);
-
-    }
 }
